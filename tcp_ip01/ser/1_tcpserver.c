@@ -54,17 +54,17 @@ int main(int argc, char * argv[])
 			}
 			else if(strstr(buf, "download") != NULL)
 			{
-				printf("-------------\n");
 				memset(buf1, 0, sizeof(buf1));
 				sscanf(buf, "download %s", buf1);
-				printf("%s\n", buf1);
 				download(buf1, connfd);
+				printf("download succeed\n");
 			}
 			else if(strstr(buf, "upload") != NULL)
 			{
 				memset(buf1, 0, sizeof(buf1));
 				sscanf(buf, "upload %s", buf1);
 				upload(buf1, connfd);
+				printf("upload succeed\n");
 			}
 			else if(strstr(buf, "quit") != NULL)
 			{

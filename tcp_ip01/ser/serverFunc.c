@@ -46,16 +46,16 @@ int server_init(int port)
 //监听客户端
 int wait_for_client(int sockfd)
 {
-	struct sockaddr_in addr;
-	socklen_t len = sizeof(addr);
-	int connfd = accept(sockfd, (struct sockaddr *)&addr, &len);
+	struct sockaddr_in cliaddr;
+	socklen_t len = sizeof(cliaddr);
+	int connfd = accept(sockfd, (struct sockaddr *)&cliaddr, &len);
 	if(connfd < 0)
 	{
 		perror("accept");
 		return -1;
 	}
 
-	printf("client: %s:%u\n", inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+	printf("client: %s:%u\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 	
 	return connfd;
 }
