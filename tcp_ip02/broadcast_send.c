@@ -40,7 +40,7 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
-	char buf[N] = "This is a broadcast package\n";
+	char buf[N] = "This is a broadcast package, and test it\n";
 	int on = 1;
 
 	struct sockaddr_in dstaddr;

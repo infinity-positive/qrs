@@ -40,7 +40,7 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
-	char buf[N] = "This is a multicast package\n";
+	char buf[N] = "This is a multicast package, and test it\n";
 
 	struct sockaddr_in dstaddr;
 	bzero(&dstaddr, sizeof(dstaddr));

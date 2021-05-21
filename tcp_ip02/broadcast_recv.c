@@ -56,8 +56,11 @@ int main(int argc, char * argv[])
 
 	while(1)
 	{
+		bzero(buf, sizeof(buf));
 		recvfrom(sockfd, buf, N, 0, (SA *)&peeraddr, &peerlen);
 		printf("[%s: %d] %s\n", inet_ntoa(peeraddr.sin_addr), ntohs(peeraddr.sin_port), buf);
+		if(strstr(buf, "quit") != NULL)
+			break;
 	}
 
 	close(sockfd);
