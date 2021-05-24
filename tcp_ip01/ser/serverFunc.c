@@ -65,25 +65,25 @@ void menu(int connfd)
 {
 	char buf[128] = {0};
 	strcpy(buf, "-------------------------------------------------------------\n");
-	send(connfd, buf, strlen(buf), 0);
+	send(connfd, buf, sizeof(buf), 0);
 
 	memset(buf, 0, sizeof(buf));
 	strcpy(buf," 1.list  2.download filename  3.upload filename  4.quit\n");
-	send(connfd, buf, strlen(buf), 0);
+	send(connfd, buf, sizeof(buf), 0);
 
 	memset(buf, 0, sizeof(buf));
 	strcpy(buf,"-------------------------------------------------------------\n");
-	send(connfd, buf, strlen(buf), 0);
+	send(connfd, buf, sizeof(buf), 0);
 
 	memset(buf, 0, sizeof(buf));
 	strcpy(buf,"cmd >>>\n");
-	send(connfd, buf, strlen(buf), 0);
+	send(connfd, buf, sizeof(buf), 0);
 }
 
 //服务器目录列表
 void list(int connfd)
 {
-	DIR *dir = opendir("./");
+	DIR *dir = opendir("/home/yu/Desktop/git/ftp/");
 	if(dir == NULL)
 	{
 		perror("opendir");
@@ -101,7 +101,7 @@ void list(int connfd)
 		strcpy(buf, filename);
 		char *buf1 = "\n";
 		strcat(buf, buf1);
-		write(connfd, buf, strlen(buf));
+		write(connfd, buf, sizeof(buf));
 	}
 }
 
@@ -118,7 +118,7 @@ void download(char *filename, int connfd)
 	lseek(fd, 0, SEEK_SET);
 	char buf[32] = {0};
 	sprintf(buf, "len: %d", length);
-	write(connfd, buf, strlen(buf));
+	write(connfd, buf, sizeof(buf));
 
 	while(1)
 	{

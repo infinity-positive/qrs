@@ -75,7 +75,7 @@ int main(int argc, char * argv[])
 			{
 				memset(buf, 0, sizeof(buf));
 				strcpy(buf, "please input according to menu\n");
-				send(connfd, buf, strlen(buf), 0);
+				send(connfd, buf, sizeof(buf), 0);
 			}
 		}
 		close(connfd);
