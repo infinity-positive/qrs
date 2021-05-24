@@ -104,7 +104,7 @@ void listFileName(int sockfd)
 	printf("%s\n", buf);
 }
 
-void list(int sockfd)
+void menu(int sockfd)
 {
 	char buf[MAXSIZE] = {0};
 	for(int i = 0; i < 4; i++)

@@ -26,13 +26,14 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
-	char buf[MAXSIZE] = {0};
-	char *filename = NULL;
+	char filename[32] = {0};
 
 	while(1)
 	{
 		/*获取服务器menu*/
-		list(sockfd);	
+		menu(sockfd);
+
+		char buf[MAXSIZE] = {0};
 
 		//向服务器输入指令
 		printf("input: ");
@@ -47,6 +48,7 @@ int main(int argc, char * argv[])
 		else if(strstr(buf, "download") != NULL)
 		{
 			sscanf(buf, "download %s", filename);
+			printf("%s\n", filename);
 			download(filename, sockfd);
 		}
 		else if(strstr(buf, "upload") != NULL)
@@ -57,6 +59,12 @@ int main(int argc, char * argv[])
 		else if(strstr(buf, "quit") < 0)
 		{
 			break;
+		}
+		else
+		{
+			bzero(buf, sizeof(buf));
+			recv(sockfd, buf, sizeof(buf), 0);
+			fputs(buf, stdout);
 		}
 
 	}
