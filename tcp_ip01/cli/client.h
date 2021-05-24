@@ -31,5 +31,6 @@ int client_init(char *ip, int port);
 void download(char *filename, int connfd);
 void upload(char *filename, int connfd);
 void listFileName(int sockfd);
+void list(int sockfd);
 
 #endif

@@ -26,21 +26,19 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
-	char buf[2*MAXSIZE] = {0};
+	char buf[MAXSIZE] = {0};
 	char *filename = NULL;
 
 	while(1)
 	{
 		/*获取服务器menu*/
-		recv(sockfd, buf, sizeof(buf), 0);
-		printf("%s\n", buf);
-		memset(buf, 0, sizeof(buf));
+		list(sockfd);	
 
-		
 		//向服务器输入指令
 		printf("input: ");
-		gets(buf);
-		send(sockfd, buf, strlen(buf), 0);
+		fgets(buf, sizeof(buf), stdin);
+		buf[strlen(buf) - 1] = '\0';
+		send(sockfd, buf, sizeof(buf), 0);
 
 		if(strncmp(buf, "list", 4) == 0)
 		{

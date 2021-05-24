@@ -102,5 +102,15 @@ void listFileName(int sockfd)
 	char buf[MAXSIZE] = {0};
 	read(sockfd, buf, sizeof(buf));
 	printf("%s\n", buf);
+}
 
+void list(int sockfd)
+{
+	char buf[MAXSIZE] = {0};
+	for(int i = 0; i < 4; i++)
+	{
+		recv(sockfd, buf, sizeof(buf), 0);
+		puts(buf);
+		memset(buf, 0, sizeof(buf));
+	}
 }
