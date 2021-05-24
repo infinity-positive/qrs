@@ -83,7 +83,7 @@ void menu(int connfd)
 //服务器目录列表
 void list(int connfd)
 {
-	DIR *dir = opendir("/home/yu/Desktop/git/ftp/");
+	DIR *dir = opendir(PTH);
 	if(dir == NULL)
 	{
 		perror("opendir");
@@ -108,6 +108,7 @@ void list(int connfd)
 //客户端下载数据
 void download(char *filename, int connfd)
 {
+	chdir(PTH);
 	int fd = open(filename, O_RDONLY);
 	if(fd < 0)
 	{
@@ -138,6 +139,7 @@ void download(char *filename, int connfd)
 //客户端上传文件
 void upload(char *filename, int connfd)
 {
+	chdir(PTH);
 	int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0640);
 	if(fd < 0)
 	{
@@ -157,9 +159,11 @@ void upload(char *filename, int connfd)
 		printf("client succeed quit\n");
 		close(connfd);
 	}
+	printf("recv: %s\n", buf);
 	
 	int len;
 	sscanf(buf, "len: %d", &len);
+	printf("%d\n", len);
 	while(1)
 	{
 		memset(buf, 0, sizeof(buf));

@@ -56,6 +56,7 @@ int main(int argc, char * argv[])
 			{
 				memset(buf1, 0, sizeof(buf1));
 				sscanf(buf, "download %s", buf1);
+				puts(buf1);
 				download(buf1, connfd);
 				printf("download succeed\n");
 			}
@@ -63,6 +64,7 @@ int main(int argc, char * argv[])
 			{
 				memset(buf1, 0, sizeof(buf1));
 				sscanf(buf, "upload %s", buf1);
+				puts(buf1);
 				upload(buf1, connfd);
 				printf("upload succeed\n");
 			}

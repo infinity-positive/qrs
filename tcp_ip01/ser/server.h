@@ -25,6 +25,8 @@
 #include<sys/socket.h>
 #include<arpa/inet.h>
 
+#define PTH "/home/yu/Desktop/git/ftp/"
+
 int server_init(int port);
 int wait_for_client(int sockfd);
 void menu(int connfd);
