@@ -76,6 +76,7 @@ void menu(int cliSockfd)
 	send(cliSockfd, buf, sizeof(buf), 0);
 }
 
+/*
 int filename_len(int cliSockfd)
 {
 	DIR *dir = opendir(PTH);
@@ -102,6 +103,7 @@ int filename_len(int cliSockfd)
 
 	closedir(dir);
 }
+*/
 
 int filename_list(int cliSockfd)
 {
@@ -148,6 +150,7 @@ int download(char *filename, int cliSockfd)
 	{
 		bzero(buf, sizeof(buf));
 		int ret = read(fd, buf, sizeof(buf));
+//		printf("%d\n", ret);
 		if(ret == 0)
 		{
 			break;
@@ -221,7 +224,7 @@ int link_cli(int serSockfd)
 				char filename[MAXSIZE] = {0};
 				if(strstr(buf, "list") != NULL)
 				{
-					filename_len(cliSockfd);
+//					filename_len(cliSockfd);
 					filename_list(cliSockfd);
 				}
 				else if(strstr(buf, "download ") != NULL)
