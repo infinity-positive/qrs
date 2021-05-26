@@ -129,14 +129,59 @@ int filename_list(int cliSockfd)
 	closedir(dir);
 }
 
-void download()
+int download(char *filename, int cliSockfd)
 {
+	chdir(PTH);
+	int fd = open(filename, O_RDONLY);
+	if(fd < 0)
+	{
+		perror("opendownload");
+		return -1;
+	}
+	int length = lseek(fd, 0, SEEK_END);
+	lseek(fd, 0, SEEK_SET);
+	char buf[MAXSIZE] = {0};
+	sprintf(buf, "len: %d", length);
+	send(cliSockfd, buf, sizeof(buf), 0);
 
+	while(1)
+	{
+		bzero(buf, sizeof(buf));
+		int ret = read(fd, buf, sizeof(buf));
+		if(ret == 0)
+		{
+			break;
+		}
+		send(cliSockfd, buf, ret, 0);
+	}
+	close(fd);
 }
 
-void upload()
+int upload(char *filename, int cliSockfd)
 {
+	chdir(PTH);
+	int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0640);
+	if(fd < 0)
+	{
+		perror("openupload");
+		return -1;
+	}
 
+	char buf[MAXSIZE] = {0};
+	int len;
+	recv(cliSockfd, buf, sizeof(buf), 0);
+	sscanf(buf, "len: %d", &len);
+	printf("%d\n", len);
+
+	while(len)
+	{
+		int ret = recv(cliSockfd, buf, sizeof(buf), 0);
+		write(fd, buf, ret);
+
+		len -= ret;
+	}
+
+	close(fd);
 }
 
 int link_cli(int serSockfd)
@@ -183,14 +228,14 @@ int link_cli(int serSockfd)
 				{
 					bzero(filename, sizeof(filename));
 					sscanf(buf, "download %s", filename);
-					download(cliSockfd, filename);
+					download(filename, cliSockfd);
 					printf("download finished\n");
 				}
 				else if(strstr(buf, "upload ") != NULL)
 				{
 					bzero(filename, sizeof(filename));
 					sscanf(buf, "upload %s", filename);
-					upload(cliSockfd, filename);
+					upload(filename, cliSockfd);
 					puts("upload finished");
 				}
 				else if(strstr(buf, "quit") != NULL)
