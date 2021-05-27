@@ -1,14 +1,14 @@
 /*===============================================================
-*   Copyright (C) 2021 All rights reserved.
-*   
-*   文件名称：ioClass.cpp
-*   创 建 者：YQQ
-*   创建日期：2021年05月27日
-*   描    述：
-*
-*   更新日志：
-*
-================================================================*/
+ *   Copyright (C) 2021 All rights reserved.
+ *   
+ *   文件名称：ioClass.cpp
+ *   创 建 者：YQQ
+ *   创建日期：2021年05月27日
+ *   描    述：
+ *
+ *   更新日志：
+ *
+ ================================================================*/
 #include <iostream>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -91,18 +91,22 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
+	int len = f.lseekfile(0, SEEK_END);
+	cout << len << endl;
+	f.lseekfile(0, SEEK_SET);
+
 	char buf[128] = {0};
 	while(1)
 	{
 		memset(buf, 0, sizeof(buf));
-	int ret = f.readfile(buf, sizeof(buf));
-	if(ret == 0)
-		break;
-	d.writefile(buf, ret);
+		int ret = f.readfile(buf, sizeof(buf));
+		if(ret == 0)
+			break;
+		d.writefile(buf, ret);
 	}
 
 	f.closefile();
 	d.closefile();
-	
+
 	return 0;
 }
